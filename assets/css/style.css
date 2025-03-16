@@ -145,8 +145,6 @@
         padding: 0.1rem;
     }
 
-   
-
     .sidebar.active {
         width: 200px;
     }
@@ -821,4 +819,448 @@ body.login-page {
         padding: 12px; /* Padding lebih kecil untuk mobile */
         font-size: 16px; /* Ukuran font lebih kecil untuk mobile */
     }
+}
+
+
+
+/* Container Carousel */
+.carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    height: 600px; /* Tinggi carousel diperbesar */
+    overflow: hidden;
+}
+
+/* Container untuk semua materi */
+.carousel-container {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Styling untuk satu materi */
+.materi-item {
+    min-width: 100%; /* Satu materi mengambil lebar penuh container */
+    box-sizing: border-box;
+    border: 1px solid #ddd; /* Border utama card */
+    border-radius: 1rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Jarak antara header, body, dan footer diperbesar */
+    height: 100%; /* Tinggi card menyesuaikan carousel */
+}
+
+/* Header Card */
+.materi-item-header {
+    border-bottom: 2px solid var(--sidebar-bg); /* Border biru di bagian bawah header */
+    /* Padding diperbesar */
+    background-color: var(--sidebar-bg);
+    border-radius: 1rem 1rem 0 0;
+    color: #ffffff;
+    text-align: center; /* Judul di tengah */
+}
+
+.materi-item-header h3 {
+    margin: 0;
+    font-size: 2em; /* Ukuran font diperbesar */
+    color: var(--sidebar-text);
+}
+
+/* Body Card */
+.materi-item-body {
+    flex: 1; /* Mengisi ruang yang tersedia */
+    display: flex;
+    gap: 20px; /* Jarak antara gambar dan audio/deskripsi diperbesar */
+    padding: 20px;
+}
+
+/* Bagian Kiri: Gambar */
+.materi-item-left {
+    flex: 1; /* Mengambil 1 bagian dari ruang yang tersedia */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Gambar Materi */
+.materi-item-image {
+    width: 100%;
+    max-width: 400px; /* Ukuran gambar diperbesar */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Pastikan gambar tidak keluar dari container */
+}
+
+.materi-item-image img {
+    max-width: 100%;
+    max-height: 300px; /* Tinggi gambar diperbesar */
+    border-radius: 5px;
+    object-fit: cover; /* Gambar menutupi area tanpa distorsi */
+}
+
+/* Bagian Kanan: Audio dan Deskripsi */
+.materi-item-right {
+    flex: 2; /* Mengambil 2 bagian dari ruang yang tersedia */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Jarak antara audio dan deskripsi diperbesar */
+}
+
+/* Audiobook */
+.materi-item-audio {
+    width: 100%;
+    max-width: 100%; /* Audio player mengambil lebar penuh */
+}
+
+/* Deskripsi Materi */
+.materi-item-description {
+    font-size: 1.2em; /* Ukuran font diperbesar */
+    color: #666;
+}
+
+/* Footer Card */
+.materi-item-footer {
+    border-top: 2px solid #dc3545; /* Border merah di bagian atas footer */
+    /* Padding diperbesar */
+    text-align: center; /* Tanggal di tengah */
+    border-radius: 0 0 1rem 1rem;
+    background-color: var(--sidebar-bg);
+    
+}
+
+.tanggal {
+    font-size: 1em; /* Ukuran font diperbesar */
+    color: var(--sidebar-text);
+}
+
+/* Teks jika tidak ada gambar atau audio */
+.no-image, .no-audio {
+    color: #999;
+    font-style: italic;
+}
+
+/* Tombol Carousel */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 12px; /* Padding diperbesar */
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    font-size: 1.5em; /* Ukuran font diperbesar */
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Responsive Design untuk Layar Mobile */
+@media (max-width: 768px) {
+    /* Container Carousel */
+    .carousel {
+        height: 500px; /* Tinggi carousel lebih besar di mobile */
+    }
+
+    /* Container untuk semua materi */
+    .carousel-container {
+        gap: 15px; /* Jarak antar card lebih besar */
+    }
+
+   
+
+    /* Body Card: Tata letak vertikal */
+    .materi-item-body {
+        flex-direction: column; /* Gambar dan audio/deskripsi ditampilkan vertikal */
+        gap: 15px; /* Jarak antara gambar dan audio/deskripsi */
+    }
+
+    /* Gambar Materi */
+    .materi-item-image {
+        max-width: 100%; /* Gambar mengambil lebar penuh */
+        max-height: 200px; /* Tinggi gambar lebih besar di mobile */
+    }
+
+    .materi-item-image img {
+        max-height: 200px; /* Tinggi gambar lebih besar di mobile */
+    }
+
+    /* Audio dan Deskripsi */
+    .materi-item-right {
+        width: 100%; /* Audio dan deskripsi mengambil lebar penuh */
+    }
+
+   
+}
+/* Menggunakan variabel CSS untuk styling */
+:root {
+    --sidebar-bg: #f13b2a; /* Merah muda cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #FF9A8B; /* Merah muda lebih terang */
+    --content-bg: #FFD166; /* Kuning cerah */
+    --content-text: #333333; /* Teks hitam agar kontras */
+    --hover: #ffd700;
+    --card-bg: #e2a9a9; 
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow card */
+}
+
+[data-theme="dark"] {
+    --sidebar-bg: #6A0572; /* Ungu cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #9B5DE5; /* Ungu lebih lembut */
+    --content-bg: #F15BB5; /* Pink cerah */
+    --content-text: #ffffff; /* Teks putih */
+    --card-bg: #9f4eaf;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow card */
+}
+
+/* Styling untuk elemen-elemen */
+body {
+    background-color: var(--content-bg);
+    color: var(--content-text);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding: 20px;
+}
+
+.content-title {
+    font-size: 2em;
+    color: var(--content-text);
+}
+
+.content-text {
+    font-size: 1.2em;
+    color: var(--content-text);
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.poin-container {
+    font-size: 1.5em;
+    color: var(--content-text);
+    margin-bottom: 20px;
+}
+
+.tebak-kata-container {
+    text-align: center;
+}
+
+.tebak-kata-title {
+    font-size: 1.8em;
+    color: var(--content-text);
+}
+
+.organ-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.organ-description {
+    font-size: 1.1em;
+    color: var(--content-text);
+    margin-bottom: 20px;
+}
+
+.card-container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.scrambled-word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 10px;
+}
+
+.scrambled-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: var(--sidebar-bg);
+    border: 2px solid var(--sidebar-hover);
+    font-size: 1.2em;
+    text-align: center;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.tebakan-form {
+    margin-top: 20px;
+}
+
+.tebakan-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+}
+.tebakan-submit {
+    padding: 10px 20px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animasi untuk background dan transform */
+}
+
+.tebakan-submit:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.tebakan-submit:active {
+    background-color: var(--sidebar-hover); /* Warna saat tombol aktif */
+    transform: scale(0.95); /* Sedikit mengecilkan tombol saat ditekan */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow untuk efek tekan */
+}
+
+[data-theme="dark"] .tebakan-submit:active {
+    background-color: var(--sidebar-hover); /* Warna sesuai tema gelap */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Shadow lebih gelap */
+}
+.pesan {
+    margin-top: 20px;
+    background-color: var(--sidebar-text);
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--content-text);
+}
+
+.pesan.error {
+    color: #dc3545;
+}
+
+.no-data-message {
+    color: var(--content-text);
+    font-style: italic;
+}
+
+/* Container untuk Poin */
+.poin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Kotak Poin */
+.poin-box {
+    background-color: rgba(51, 38, 38, 0.8); /* Background semi-transparan */
+    border: 3px solid yellow;
+    border-radius: 15px; /* Sudut border yang lebih melengkung */
+    padding: 15px 30px; /* Padding yang lebih besar */
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--sidebar-text);
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow untuk efek kedalaman */
+    overflow: hidden; /* Agar teks yang bergerak tidak keluar dari kotak */
+    white-space: nowrap; /* Mencegah teks wrap */
+    position: relative; /* Untuk positioning teks yang bergerak */
+   
+    backdrop-filter: blur(5px); /* Efek blur untuk background */
+}
+
+/* Teks yang Berjalan */
+.running-text {
+    display: inline-block;
+    padding-left: 100%; /* Mulai dari luar kotak (kanan) */
+    animation: running-text 10s linear infinite; /* Animasi berjalan selama 10 detik */
+}
+
+@keyframes running-text {
+    0% {
+        transform: translateX(0); /* Mulai dari kanan */
+    }
+    100% {
+        transform: translateX(-100%); /* Berakhir di kiri */
+    }
+}
+
+/* Form Tebakan dengan Input Kotak */
+.tebakan-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tebakan-input {
+    padding: 10px;
+    border: 2px solid var(--content-text);
+    border-radius: 4px;
+    width: 200px;
+    text-align: center;
+    font-size: 1.2em;
+    background-color: transparent;
+    color: var(--content-text);
+    outline: none;
+}
+
+.tebakan-input::placeholder {
+    color: var(--content-text);
+    opacity: 0.7;
+}
+
+.tebakan-submit {
+    padding: 10px 20px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tebakan-submit:hover {
+    background-color: var(--sidebar-hover);
+}
+.tebakan-input:focus {
+    border-color: var(--sidebar-bg);
+    box-shadow: 0 0 8px rgba(241, 59, 42, 0.7); /* Shadow lebih tebal */
+    transform: scale(1.02); /* Sedikit memperbesar input */
+}
+[data-theme="dark"] .tebakan-input:focus {
+    border-color: var(--sidebar-bg); /* Warna border sesuai tema gelap */
+    box-shadow: 0 0 5px rgba(106, 5, 114, 0.5); /* Shadow sesuai tema gelap */
 }

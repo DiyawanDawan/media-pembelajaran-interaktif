@@ -1,13 +1,23 @@
 <?php
-require_once '../includes/db.php';
+session_start();
+
+// Jika admin belum login, redirect ke halaman login
+// if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+// header("Location: index.php");
+// exit;
+// }
+
+// Include koneksi database
+require '../../includes/db.php';
 
 // Ambil data guru dari database
 $stmt_guru = $pdo->query("SELECT * FROM Guru");
 $guru = $stmt_guru->fetchAll();
 ?>
 
-<?php include_once('components/header.php') ?>
-<?php include_once('components/nav.php') ?>
+<?php include_once('../components/header.php') ?>
+<?php include_once('../components/nav.php') ?>
+
 <main class="content">
     <h1>Biodata Guru</h1>
     <div class="card-container">

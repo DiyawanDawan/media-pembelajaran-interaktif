@@ -1,13 +1,13 @@
 <?php
-require_once '../includes/db.php';
+require_once '../../includes/db.php';
 
 // Mengambil data dari tabel pembelajaran
 $sql = "SELECT * FROM pembelajaran";
 $stmt = $pdo->query($sql);
 ?>
 
-<?php include_once('components/header.php'); ?>
-<?php include_once('components/nav.php'); ?>
+<?php include_once('../components/header.php'); ?>
+<?php include_once('../components/nav.php'); ?>
 <main class="content">
     <div class="learning-goald">
         <h1 class="learning-title">Tujuan & Capaian Pembelajaran</h1>
@@ -36,7 +36,7 @@ $stmt = $pdo->query($sql);
         </div>
     </div>
 </main>
-<script src="script/script.js"></script>
+<script src="../script/script.js"></script>
 </body>
 
 </html>
