@@ -1,0 +1,824 @@
+/* Variabel CSS untuk mode terang (light mode) */
+/* 🌈 Tema Cerah (Light Mode) */
+/* Variabel CSS untuk mode terang (light mode) */
+:root {
+    --sidebar-bg: #f13b2a; /* Merah muda cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #FF9A8B; /* Merah muda lebih terang */
+    --content-bg: #FFD166; /* Kuning cerah */
+    --content-text: #333333; /* Teks hitam agar kontras */
+    --hover: #ffd700;
+    --card-bg: #e2a9a9; 
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow card */
+}
+
+/* Variabel CSS untuk mode gelap (dark mode) */
+[data-theme="dark"] {
+    --sidebar-bg: #6A0572; /* Ungu cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #9B5DE5; /* Ungu lebih lembut */
+    --content-bg: #F15BB5; /* Pink cerah */
+    --content-text: #ffffff; /* Teks putih */
+    --card-bg: #9f4eaf;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow card */
+}
+
+/* 500073 */
+/* 500073 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* CSS untuk konten utama */
+.content {
+    margin-left: 200px; /* Jarak agar tidak tertutup sidebar */
+    padding: 20px;
+    background-color: var(--content-bg);
+    color: var(--content-text);
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    color: var(--content-text);
+    position: fixed;
+    left: 0;
+        background: linear-gradient(180deg, var(--sidebar-bg), var(--sidebar-hover));
+
+    z-index: 10000;
+    top: 0;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+}
+.sidebar__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Teks judul di kiri, tombol di kanan */
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    color: var(--hover); /* Warna emas untuk judul */
+    padding: 10px; /* Padding untuk judul */
+}
+
+/* Tombol hamburger di dalam judul */
+
+
+/* Ikon hamburger di judul */
+.sidebar__title-icon {
+    display: none;
+    font-size: 24px;
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1; 
+}
+
+/* List menu */
+.sidebar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute; /* Posisi absolut untuk mengatur tata letak */
+    top: 80px; /* Jarak dari atas sidebar */
+    left: 0;
+    width: 100%; /* Lebar penuh */
+}
+
+/* Item menu */
+.sidebar__item {
+    margin-bottom: 10px;
+}
+
+/* Link menu */
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sidebar-text);
+    transition: all 0.3s ease-in-out;
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.sidebar__link:hover {
+    background: linear-gradient(90deg, var(--sidebar-hover), var(--content-bg)); /* Efek gradasi */
+    color: var(--hover); /* Warna emas */
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1; 
+    transform: scale(1.06);
+}
+
+
+/* Active state */
+.sidebar__link.active {
+    background-color: var(--sidebar-hover);
+    color: var(--hover);
+    font-weight: bold;
+}
+.sidebar-toggle:hover {
+    transform: scale(1.1); /* Sedikit membesar saat hover */
+      background: linear-gradient(90deg,  var(--sidebar-hover), var(--content-bg),);
+    color: var(--hover);
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1;
+    transform: translateX(5px) scale(1.06);
+    
+}
+/* Ikon di dalam link */
+.sidebar__link i {
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+/* Responsive untuk Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 50px;
+        padding: 0.1rem;
+    }
+
+   
+
+    .sidebar.active {
+        width: 200px;
+    }
+
+    /* Sembunyikan teks judul dan tampilkan ikon hamburger saat sidebar tertutup */
+    .sidebar:not(.active) .sidebar__title-text {
+        display: none;
+    }
+
+    .sidebar:not(.active) .sidebar__title-icon {
+        display: block;
+        padding: 10px;
+    }
+
+    /* Sembunyikan teks menu saat sidebar tertutup */
+    .sidebar:not(.active) .sidebar__text {
+        display: none;
+    }
+
+    .content {
+        margin-left: 50px;
+    }
+}
+
+/* Tombol toggle mode */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+     background: linear-gradient(45deg, var(--sidebar-bg), var(--sidebar-hover));
+    color: var(--sidebar-text);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+       transform: scale(1.1);
+    background: linear-gradient(45deg, var(--sidebar-hover), var(--sidebar-bg));
+}
+
+/* Ikon dark mode */
+.theme-toggle i {
+    font-size: 20px;
+}
+
+/* Overlay untuk mobile */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Style untuk tombol hamburger menu */
+.sidebar-toggle {
+    background-color: transparent;
+    border: none;
+    color: var(--sidebar-text);
+     
+    transform: scale(1.1);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+/* Ikon di dalam tombol hamburger */
+.sidebar-toggle i {
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+/* Responsive untuk Mobile */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: block;
+    }
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index:-2;
+}
+
+/* Tampilkan overlay saat sidebar aktif */
+.sidebar.active ~ #overlay {
+    display: block;
+}
+
+.sidebar.active {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
+
+/* Animasi glowing */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #FFD700; }
+    100% { text-shadow: 0 0 15px #FFD700; }
+}
+
+/* TODO syle CP TP */
+/* General Styling */
+
+.learning-goald {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.learning-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--content-text); /* Warna teks putih seperti kapur */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.table-container {
+    /* overflow-x: auto; */
+    background-color: var(--sidebar-bg); /* Warna dasar papan tulis */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    position: relative;
+}
+
+/* Table Styling */
+.learning-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: transparent;
+    color: var(--content-text); /* Warna teks putih seperti kapur */
+}
+
+.table-header {
+    background-color: var(--sidebar-bg); /* Warna header lebih gelap */
+    color: var(--sidebar-text);
+    font-size: 1.2rem;
+}
+
+.table-header th {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid var(--sidebar-bg); /* Garis bawah putih */
+}
+
+.table-row {
+    transition: background-color 0.3s ease;
+}
+
+.table-row:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Efek hover transparan */
+}
+
+.table-row td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Garis antar baris */
+    font-size: 1rem;
+    color: var(--sidebar-text);
+}
+
+.cell-materi {
+    font-weight: bold;
+    color: #f1c40f; /* Warna kuning untuk ID Materi */
+}
+
+.cell-tujuan, .cell-capaian {
+    color: var(--sidebar-text);
+}
+
+/* Alternating Row Colors */
+.table-row:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05); /* Baris genap lebih transparan */
+}
+
+/* No Data Message */
+.no-data-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--sidebar-text);
+    padding: 20px;
+}
+
+/* Ilustrasi SVG */
+.table-container img {
+    position: absolute;
+    bottom: 0; /* Posisi ilustrasi di bawah tabel */
+    left: -50px;
+    width: 200px; /* Sesuaikan ukuran ilustrasi */
+    height: auto;
+    opacity: 0.8; /* Transparansi ilustrasi */
+    z-index: 1;
+ 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .learning-title {
+        font-size: 2rem;
+    }
+
+    .table-header th {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .table-row td {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .table-container img {
+        width: 150px; /* Ukuran ilustrasi lebih kecil di mobile */
+        bottom: -30px;
+        right: -30px;
+    }
+}
+
+
+
+
+
+/* TODO style kuis evaluasi */
+
+.quiz-header {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--sidebar-bg);
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.quiz-navigation {
+    margin-bottom: 20px;
+    background-color: var(--sidebar-bg);
+    /* margin: 1rem; */
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.nav-title {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--content-text);
+    margin-bottom: 10px;
+}
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    /* padding-bottom: 1.5rem; */
+    justify-content: center;
+}
+
+.nav-btn {
+    padding: 10px;
+    background-color: var(--sidebar-text);
+    color: var(--sidebar-bg);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-btn.answered {
+    background-color: #4CAF50;
+    color: var(--sidebar-text);
+}
+
+.nav-btn:hover {
+    background-color: var(--sidebar-hover);
+    color: var(--content-text);
+}
+
+.quiz-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.question-container {
+    background: var(--sidebar-bg);
+    background: linear-gradient(90deg, var(--sidebar-hover), var(--sidebar-bg));
+    color: var(--sidebar-text);
+    padding: 15px;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.question-container:hover {
+    transform: scale(1.02);
+}
+
+
+.question-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.option-list {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    background: var(--sidebar-bg);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.option-label:hover {
+    background: var(--sidebar-hover);
+    color: var(--content-text);
+    text-shadow: 0 0 15px #FFD700; 
+    border: 1px solid var(--sidebar-bg)
+    /* background: linear-gradient(90deg,  var(--sidebar-bg, var(--sidebar-hover))); */
+}
+
+.option-input {
+    transform: scale(1.2);
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-prev {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+}
+
+.btn-next, .btn-submit {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Styling untuk ilustrasi kuis */
+.alutrasi {
+    position: absolute;
+    bottom: 0; /* Posisi ilustrasi di bawah tabel */
+    right: 0;
+    width: 150px; /* Sesuaikan ukuran ilustrasi */
+    height: auto;
+    opacity: 1; /* Transparansi ilustrasi */
+    z-index: 1;
+ 
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .alutrasi {
+        width: 120px; /* Sesuaikan ukuran ilustrasi */
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    }
+    .question-container {
+        padding: 10px;
+    }
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .nav-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+} 
+
+
+/* TODO css Guru */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card */
+.card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.card-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 5px solid transparent;
+    border-radius: 15px;
+    animation: borderAnimation 3s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes borderAnimation {
+    0% {
+        border-color: #FF6F61;
+    }
+    25% {
+        border-color: #6B5B95;
+    }
+    50% {
+        border-color: #88B04B;
+    }
+    75% {
+        border-color: #FFA500;
+    }
+    100% {
+        border-color: #FF6F61;
+    }
+}
+/* Card Header */
+.card-header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--sidebar-bg), var(--sidebar-hover));
+    color: var(--sidebar-text);
+}
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    object-fit: cover;
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Card Body */
+.card-body {
+    padding: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: bold;
+    color: var(--sidebar-bg);
+    flex: 1;
+}
+
+.info-value {
+    flex: 2;
+    text-align: right;
+    color: var(--card-text);
+}
+
+/* Card Footer */
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg,var(--sidebar-hover),  var(--sidebar-bg));
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.university-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: spin 5s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.back-link:hover {
+    background: var(--sidebar-hover);
+}
+
+
+
+
+/* TODO Login css */
+/* General Styles */
+body.login-page {
+    font-family: Arial, sans-serif;
+    background-color: var(--content-bg); /* Menggunakan variabel untuk background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.login-container {
+    background-color: var(--card-bg); /* Menggunakan variabel untuk background card */
+    padding: 40px; /* Padding lebih besar */
+    border-radius: 12px; /* Border radius lebih besar */
+    box-shadow: var(--card-shadow); /* Menggunakan variabel untuk shadow card */
+    width: 90%; /* Lebar container responsif */
+    max-width: 400px; /* Lebar maksimum untuk desktop */
+    text-align: center;
+}
+
+.login-title {
+    font-size: 32px; /* Ukuran font lebih besar */
+    margin-bottom: 30px; /* Margin lebih besar */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.error-message {
+    color: #ff0000; /* Tetap merah untuk pesan error */
+    font-size: 16px; /* Ukuran font lebih besar */
+    margin-bottom: 20px; /* Margin lebih besar */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Margin lebih besar */
+    text-align: left;
+}
+
+.form-label {
+    font-size: 18px; /* Ukuran font lebih besar */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    margin-bottom: 10px; /* Margin lebih besar */
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px; /* Padding lebih besar */
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Border radius lebih besar */
+    font-size: 16px; /* Ukuran font lebih besar */
+    background-color: #ffffff; /* Tetap putih untuk input */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.login-button {
+    background-color: var(--sidebar-bg); /* Menggunakan variabel untuk background tombol */
+    color: var(--sidebar-text); /* Menggunakan variabel untuk warna teks tombol */
+    padding: 15px; /* Padding lebih besar */
+    border: none;
+    border-radius: 6px; /* Border radius lebih besar */
+    font-size: 18px; /* Ukuran font lebih besar */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: var(--sidebar-hover); /* Menggunakan variabel untuk hover tombol */
+}
+
+/* Media Queries untuk Mobile */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 20px; /* Padding lebih kecil untuk mobile */
+        width: 95%; /* Lebar container lebih lebar di mobile */
+        max-width: none; /* Menghapus batasan maksimum lebar */
+    }
+
+    .login-title {
+        font-size: 28px; /* Ukuran font lebih kecil untuk mobile */
+        margin-bottom: 20px; /* Margin lebih kecil */
+    }
+
+    .form-label {
+        font-size: 16px; /* Ukuran font lebih kecil untuk mobile */
+    }
+
+    .form-input {
+        padding: 10px; /* Padding lebih kecil untuk mobile */
+        font-size: 14px; /* Ukuran font lebih kecil untuk mobile */
+    }
+
+    .login-button {
+        padding: 12px; /* Padding lebih kecil untuk mobile */
+        font-size: 16px; /* Ukuran font lebih kecil untuk mobile */
+    }
+}

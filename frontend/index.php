@@ -1,30 +1,13 @@
-<!-- TODO frontend/index.php (Halaman Utama untuk Siswa)-->
-
 <?php
 require_once '../includes/db.php';
-
-// Ambil data materi dari database
-$stmt = $pdo->query("SELECT * FROM Materi");
-$materi = $stmt->fetchAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Media Pembelajaran</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-    <h1>Daftar Materi</h1>
-    <ul>
-        <?php foreach ($materi as $m): ?>
-            <li>
-                <a href="materi.php?id=<?= $m['id_materi'] ?>">
-                    <?= htmlspecialchars($m['judul_materi']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+<?php include_once('components/header.php') ?>
+<?php include_once('components/nav.php') ?>
+<div class="content">
+    <h1 class="content-title">Selamat Datang di Media Pembelajaran</h1>
+    <p class="content-text">Silakan pilih menu di samping untuk mengakses materi.</p>
+</div>
+<script src="script/script.js"></script>
 </body>
 </html>

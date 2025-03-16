@@ -1,0 +1,597 @@
+/* Variabel CSS untuk mode terang (light mode) */
+:root {
+    --sidebar-bg: #f13b2a; /* Merah muda cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #FF9A8B; /* Merah muda lebih terang */
+    --content-bg: #FFD166; /* Kuning cerah */
+    --content-text: #333333; /* Teks hitam agar kontras */
+    --hover: #ffd700;
+    --card-bg: #e2a9a9; 
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow card */
+    --primary: #155724;
+    --secondery: #f13b2a;
+}
+
+/* Variabel CSS untuk mode gelap (dark mode) */
+[data-theme="dark"] {
+    --sidebar-bg: #6A0572; /* Ungu cerah */
+    --sidebar-text: #ffffff; /* Teks putih */
+    --sidebar-hover: #9B5DE5; /* Ungu lebih lembut */
+    --content-bg: #F15BB5; /* Pink cerah */
+    --content-text: #ffffff; /* Teks putih */
+    --card-bg: #9f4eaf;
+    --primary: #155724;
+    --secondery: #f13b2a;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow card */
+}
+
+
+/* 500073 */
+/* 500073 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* CSS untuk konten utama */
+.content {
+    margin-left: 200px; /* Jarak agar tidak tertutup sidebar */
+    padding: 20px;
+    background-color: var(--content-bg);
+    color: var(--content-text);
+    min-height: 100vh;
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    color: var(--content-text);
+    position: fixed;
+    left: 0;
+        background: linear-gradient(180deg, var(--sidebar-bg), var(--sidebar-hover));
+
+    z-index: 10000;
+    top: 0;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+}
+.sidebar__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Teks judul di kiri, tombol di kanan */
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    color: var(--hover); /* Warna emas untuk judul */
+    padding: 10px; /* Padding untuk judul */
+}
+
+/* Tombol hamburger di dalam judul */
+
+
+/* Ikon hamburger di judul */
+.sidebar__title-icon {
+    display: none;
+    font-size: 24px;
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1; 
+}
+
+/* List menu */
+.sidebar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute; /* Posisi absolut untuk mengatur tata letak */
+    top: 80px; /* Jarak dari atas sidebar */
+    left: 0;
+    width: 100%; /* Lebar penuh */
+}
+
+/* Item menu */
+.sidebar__item {
+    margin-bottom: 10px;
+}
+
+/* Link menu */
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sidebar-text);
+    transition: all 0.3s ease-in-out;
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.sidebar__link:hover {
+    background: linear-gradient(90deg, var(--sidebar-hover), var(--content-bg)); /* Efek gradasi */
+    color: var(--hover); /* Warna emas */
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1; 
+    transform: scale(1.06);
+}
+
+
+/* Active state */
+.sidebar__link.active {
+    background-color: var(--sidebar-hover);
+    color: var(--hover);
+    font-weight: bold;
+}
+.sidebar-toggle:hover {
+    transform: scale(1.1); /* Sedikit membesar saat hover */
+      background: linear-gradient(90deg,  var(--sidebar-hover), var(--content-bg),);
+    color: var(--hover);
+    text-shadow: 0 0 10px var(--hover), 0 0 20px #FFB6C1;
+    transform: translateX(5px) scale(1.06);
+    
+}
+/* Ikon di dalam link */
+.sidebar__link i {
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+/* Responsive untuk Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 50px;
+        padding: 0.1rem;
+    }
+
+   
+
+    .sidebar.active {
+        width: 200px;
+    }
+
+    /* Sembunyikan teks judul dan tampilkan ikon hamburger saat sidebar tertutup */
+    .sidebar:not(.active) .sidebar__title-text {
+        display: none;
+    }
+
+    .sidebar:not(.active) .sidebar__title-icon {
+        display: block;
+        padding: 10px;
+    }
+
+    /* Sembunyikan teks menu saat sidebar tertutup */
+    .sidebar:not(.active) .sidebar__text {
+        display: none;
+    }
+
+    .content {
+        margin-left: 50px;
+    }
+}
+
+
+/* General Styles */
+.dashboard-body {
+    font-family: Arial, sans-serif;
+    background-color: var(--content-bg); /* Menggunakan variabel untuk background */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.dashboard-title {
+    font-size: 36px; /* Ukuran font besar untuk judul */
+    margin: 20px 0; /* Margin atas dan bawah */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+/* Navigation Styles */
+.dashboard-nav {
+    background-color: var(--sidebar-bg); /* Menggunakan variabel untuk background nav */
+    width: 100%;
+    padding: 10px 0; /* Padding atas dan bawah */
+    box-shadow: var(--card-shadow); /* Menggunakan variabel untuk shadow */
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin: 0 15px; /* Jarak antar menu */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--sidebar-text); /* Menggunakan variabel untuk warna teks */
+    font-size: 18px; /* Ukuran font untuk menu */
+    padding: 10px 20px; /* Padding untuk tombol menu */
+    border-radius: 6px; /* Border radius untuk tombol menu */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: var(--sidebar-hover); /* Menggunakan variabel untuk hover */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks saat hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .dashboard-title {
+        font-size: 28px; /* Ukuran font lebih kecil untuk mobile */
+    }
+
+    .nav-list {
+        flex-direction: column; /* Menu ditumpuk vertikal di mobile */
+        align-items: center;
+    }
+
+    .nav-item {
+        margin: 10px 0; /* Jarak antar menu di mobile */
+    }
+
+    .nav-link {
+        font-size: 16px; /* Ukuran font lebih kecil untuk mobile */
+        padding: 8px 16px; /* Padding lebih kecil untuk mobile */
+    }
+}
+
+
+/* Tombol toggle mode */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+     background: linear-gradient(45deg, var(--sidebar-bg), var(--sidebar-hover));
+    color: var(--sidebar-text);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+       transform: scale(1.1);
+    background: linear-gradient(45deg, var(--sidebar-hover), var(--sidebar-bg));
+}
+
+/* Ikon dark mode */
+.theme-toggle i {
+    font-size: 20px;
+}
+
+/* Overlay untuk mobile */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Style untuk tombol hamburger menu */
+.sidebar-toggle {
+    background-color: transparent;
+    border: none;
+    color: var(--sidebar-text);
+     
+    transform: scale(1.1);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+/* Ikon di dalam tombol hamburger */
+.sidebar-toggle i {
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+/* Responsive untuk Mobile */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: block;
+    }
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index:-2;
+}
+
+/* Tampilkan overlay saat sidebar aktif */
+.sidebar.active ~ #overlay {
+    display: block;
+}
+
+.sidebar.active {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
+
+/* Animasi glowing */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #FFD700; }
+    100% { text-shadow: 0 0 15px #FFD700; }
+}
+
+
+/* TODO end css sidebar */
+/* TODO strat add materi */
+.content-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    text-align: center;
+}
+
+/* Form Styles */
+.content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-label {
+    font-size: 16px;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.form-input,
+.form-textarea,
+.form-select,
+.form-file {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: var(--sidebar-hover); /* Tetap putih untuk input */
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-file {
+    padding: 8px;
+}
+
+/* Button Styles */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button-submit {
+    background-color: var(--primary); /* Menggunakan variabel untuk background tombol */
+    color: var(--sidebar-text); /* Menggunakan variabel untuk warna teks tombol */
+}
+
+.form-button-submit:hover {
+    background-color: var(--sidebar-bg); /* Menggunakan variabel untuk hover tombol */
+}
+.form-button-submit:active {
+    border: 2px solid var(--sider-hover)
+}
+.form-button-cancel {
+    background-color: var(--secondery); /* Tetap merah untuk tombol cancel */
+    color: #fff;
+}
+
+.form-button-cancel:hover {
+    background-color: #70242c; /* Tetap merah gelap untuk hover tombol cancel */
+}
+
+/* TODO CSS LIST */
+
+.content-container {
+    padding: 20px;
+}
+
+.content-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    text-align: center;
+}
+
+.content-message {
+    padding: 10px;
+    background-color: #d4edda; /* Warna background untuk pesan sukses */
+    color: var(--primary); /* Warna teks untuk pesan sukses */
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Button Styles */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-tambah {
+    background-color: var(--primary); /* Menggunakan variabel untuk background tombol */
+    color: var(--sidebar-text); /* Menggunakan variabel untuk warna teks tombol */
+    margin-bottom: 20px;
+}
+
+.btn-tambah:hover {
+    background-color: var(--sidebar-hover); /* Menggunakan variabel untuk hover tombol */
+}
+
+.btn-edit {
+    background-color: var(--primary); /* Warna hijau untuk tombol edit */
+    color: #fff;
+    margin-right: 5px;
+}
+
+.btn-edit:hover {
+    background-color: var(--primary); /* Warna hijau gelap untuk hover tombol edit */
+}
+
+.btn-hapus {
+    background-color: var(--secondery); /* Warna merah untuk tombol hapus */
+    color: #fff;
+}
+
+.btn-hapus:hover {
+    background-color: #8a222c; /* Warna merah gelap untuk hover tombol hapus */
+}
+
+/* Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-header {
+    background-color: var(--sidebar-bg); /* Menggunakan variabel untuk background header */
+    color: var(--sidebar-text); /* Menggunakan variabel untuk warna teks header */
+    padding: 12px;
+    text-align: left;
+}
+
+.table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-row:nth-child(even) {
+    background-color: var(--card-bg); /* Menggunakan variabel untuk background baris genap */
+}
+
+.table-row:hover {
+    background-color: var(--sidebar-hover); /* Menggunakan variabel untuk hover baris */
+}
+
+.table-data {
+    padding: 12px;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+}
+
+.table-image {
+    max-width: 100px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.table-no-image {
+    color: #888;
+    font-style: italic;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.table-no-data {
+    text-align: center;
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    font-style: italic;
+    padding: 20px;
+}
+
+/* TODO css view image */
+.view-gambar-link {
+    color: var(--content-text); /* Menggunakan variabel untuk warna teks */
+    text-decoration: none; /* Menghilangkan garis bawah default */
+    font-weight: bold; /* Membuat teks lebih tebal */
+    transition: color 0.3s ease; /* Efek transisi saat hover */
+    text-decoration: none;
+    background-color: var(--sidebar-bg);
+    padding: 0.5rem;
+    border-radius: 30%;
+}
+
+.view-gambar-link:hover {
+    color: var(--sidebar-hover); /* Menggunakan variabel untuk warna hover */
+    text-decoration: underline; /* Menambahkan garis bawah saat hover */
+   
+}
+
+/* TODO css custom input  aler */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
