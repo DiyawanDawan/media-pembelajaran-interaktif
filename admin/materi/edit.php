@@ -1,14 +1,12 @@
 <?php
 session_start();
-
 // Jika admin belum login, redirect ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header("Location: ../../index.php");
+    header("Location: index.php");
     exit;
 }
 
-// Include koneksi database
-require '../../includes/db.php';
+require_once '../../includes/db.php';
 
 // Ambil ID materi dari parameter URL
 if (!isset($_GET['id'])) {
@@ -18,10 +16,10 @@ if (!isset($_GET['id'])) {
 $id_materi = $_GET['id'];
 
 // Ambil data materi dan audiobook dari database
-$sql_materi = "SELECT MATERI.*, AUDIOBOOK.file_audio 
-               FROM MATERI 
-               LEFT JOIN AUDIOBOOK ON MATERI.id_materi = AUDIOBOOK.id_materi 
-               WHERE MATERI.id_materi = :id_materi";
+$sql_materi = "SELECT materi.*, audiobook.file_audio 
+               FROM materi 
+               LEFT JOIN audiobook ON materi.id_materi = audiobook.id_materi 
+               WHERE materi.id_materi = :id_materi";
 $stmt_materi = $pdo->prepare($sql_materi);
 $stmt_materi->execute([':id_materi' => $id_materi]);
 $materi = $stmt_materi->fetch(PDO::FETCH_ASSOC);
@@ -60,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
 
     // Update data materi
-    $sql_update_materi = "UPDATE MATERI 
+    $sql_update_materi = "UPDATE materi 
                           SET judul_materi = :judul_materi, 
                               deskripsi = :deskripsi, 
                               status = :status 
@@ -76,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Jika ada file gambar baru diupload
     if ($_FILES['gambar']['size'] > 0) {
         $gambar_path = uploadFile($_FILES['gambar'], "../../assets/uploads/gambar/");
-        $sql_update_gambar = "UPDATE MATERI SET gambar = :gambar WHERE id_materi = :id_materi";
+        $sql_update_gambar = "UPDATE materi SET gambar = :gambar WHERE id_materi = :id_materi";
         $stmt_update_gambar = $pdo->prepare($sql_update_gambar);
         $stmt_update_gambar->execute([
             ':gambar' => $gambar_path,
@@ -88,14 +86,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_FILES['file_audio']['size'] > 0) {
         $audio_path = uploadFile($_FILES['file_audio'], "../../assets/uploads/audio/");
         // Cek apakah audiobook sudah ada
-        $sql_check_audio = "SELECT * FROM AUDIOBOOK WHERE id_materi = :id_materi";
+        $sql_check_audio = "SELECT * FROM audiobook WHERE id_materi = :id_materi";
         $stmt_check_audio = $pdo->prepare($sql_check_audio);
         $stmt_check_audio->execute([':id_materi' => $id_materi]);
         $audiobook = $stmt_check_audio->fetch(PDO::FETCH_ASSOC);
 
         if ($audiobook) {
             // Update file audio yang sudah ada
-            $sql_update_audio = "UPDATE AUDIOBOOK SET file_audio = :file_audio WHERE id_materi = :id_materi";
+            $sql_update_audio = "UPDATE audiobook SET file_audio = :file_audio WHERE id_materi = :id_materi";
             $stmt_update_audio = $pdo->prepare($sql_update_audio);
             $stmt_update_audio->execute([
                 ':file_audio' => $audio_path,
@@ -103,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
         } else {
             // Tambahkan file audio baru
-            $sql_insert_audio = "INSERT INTO AUDIOBOOK (file_audio, id_materi) VALUES (:file_audio, :id_materi)";
+            $sql_insert_audio = "INSERT INTO audiobook (file_audio, id_materi) VALUES (:file_audio, :id_materi)";
             $stmt_insert_audio = $pdo->prepare($sql_insert_audio);
             $stmt_insert_audio->execute([
                 ':file_audio' => $audio_path,

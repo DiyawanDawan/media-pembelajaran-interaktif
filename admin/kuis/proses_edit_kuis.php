@@ -1,14 +1,12 @@
 <?php
 session_start();
-
 // Jika admin belum login, redirect ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: index.php");
     exit;
 }
 
-// Include koneksi database
-require '../../includes/db.php';
+require_once '../../includes/db.php';
 
 // Ambil data dari form
 $id_kuis = $_POST['id_kuis'];

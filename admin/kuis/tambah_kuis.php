@@ -1,14 +1,12 @@
 <?php
 session_start();
-
 // Jika admin belum login, redirect ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: index.php");
     exit;
 }
 
-// Include koneksi database
-require '../../includes/db.php';
+require_once '../../includes/db.php';
 
 // Ambil data materi untuk dropdown
 $sql_materi = "SELECT id_materi, judul_materi FROM MATERI";

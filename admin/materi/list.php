@@ -1,14 +1,12 @@
 <?php
 session_start();
-
 // Jika admin belum login, redirect ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: index.php");
     exit;
 }
 
-// Include koneksi database
-require '../../includes/db.php';
+require_once '../../includes/db.php';
 
 // Ambil data materi dan audiobook dari database
 $sql_materi = "SELECT MATERI.*, AUDIOBOOK.file_audio 
@@ -48,7 +46,21 @@ $materi = $stmt_materi->fetchAll(PDO::FETCH_ASSOC);
                 <tr class="table-row">
                     <td class="table-data"><?= htmlspecialchars($m['id_materi']) ?></td>
                     <td class="table-data"><?= htmlspecialchars($m['judul_materi']) ?></td>
-                    <td class="table-data"><?= htmlspecialchars($m['deskripsi']) ?></td>
+                    <td class="table-data">
+                        <?php
+                        $deskripsi = htmlspecialchars($m['deskripsi']);
+                        $words = str_word_count($deskripsi, 2); // Ambil array posisi kata
+                        $word_limit = 40;
+
+                        if (count($words) > $word_limit) {
+                            $word_keys = array_keys($words);
+                            $deskripsi = substr($deskripsi, 0, $word_keys[$word_limit]) . '...';
+                        }
+
+                        echo $deskripsi;
+                        ?>
+                    </td>
+
                     <td class="table-data"><?= htmlspecialchars($m['status']) ?></td>
                     <td class="table-data">
                         <?php if ($m['gambar']): ?>
