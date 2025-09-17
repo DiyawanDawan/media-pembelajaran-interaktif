@@ -11,7 +11,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 require '../../includes/db.php';
 
 // Ambil data materi untuk dropdown
-$sql_materi = "SELECT id_materi, judul_materi FROM MATERI";
+$sql_materi = "SELECT id_materi, judul_materi FROM materi";
 $stmt_materi = $pdo->query($sql_materi);
 $materi = $stmt_materi->fetchAll(PDO::FETCH_ASSOC);
 

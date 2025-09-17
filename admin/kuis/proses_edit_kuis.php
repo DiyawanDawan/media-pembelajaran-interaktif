@@ -14,6 +14,7 @@ $pertanyaan = $_POST['pertanyaan'];
 $pilihan_a = $_POST['pilihan_a'];
 $pilihan_b = $_POST['pilihan_b'];
 $pilihan_c = $_POST['pilihan_c'];
+$pilihan_d = $_POST['pilihan_d'];
 $jawaban_benar = $_POST['jawaban_benar'];
 $id_materi = $_POST['id_materi'];
 
@@ -23,6 +24,7 @@ $sql = "UPDATE kuis
             pilihan_a = :pilihan_a, 
             pilihan_b = :pilihan_b, 
             pilihan_c = :pilihan_c, 
+            pilihan_d = :pilihan_d, 
             jawaban_benar = :jawaban_benar, 
             id_materi = :id_materi 
         WHERE id_kuis = :id_kuis";
@@ -32,6 +34,7 @@ $stmt->execute([
     ':pilihan_a' => $pilihan_a,
     ':pilihan_b' => $pilihan_b,
     ':pilihan_c' => $pilihan_c,
+    ':pilihan_d' => $pilihan_d,
     ':jawaban_benar' => $jawaban_benar,
     ':id_materi' => $id_materi ?: null, // Jika id_materi kosong, set null
     ':id_kuis' => $id_kuis,

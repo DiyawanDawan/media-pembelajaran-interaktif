@@ -5,7 +5,7 @@ require '../../includes/db.php';
 
 function fetchMateri($pdo) {
     try {
-        $stmt_materi = $pdo->query("SELECT * FROM Materi");
+        $stmt_materi = $pdo->query("SELECT * FROM materi");
         return $stmt_materi->fetch(PDO::FETCH_ASSOC) ?: [];
     } catch (PDOException $e) {
         die("Error fetching materi: " . $e->getMessage());

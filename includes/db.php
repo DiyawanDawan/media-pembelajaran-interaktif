@@ -2,9 +2,9 @@
 
 <?php
 $host = 'localhost';
-$db   = 'media_pembelajaran';
-$user = 'root';
-$pass = '';
+$db   = 'u372786535_mediabelajar';
+$user = 'u372786535_mediabelajar';
+$pass = 'h2*ICr]CAhWG';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

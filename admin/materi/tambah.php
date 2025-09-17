@@ -13,7 +13,7 @@ require '../../includes/db.php';
 // Ambil id_guru dari session
 $id_guru = $_SESSION['id_guru'];
 
-// Fungsi untuk upload file (tetap sama)
+// Fungsi untuk upload file
 function uploadFile($file, $target_dir) {
     $target_file = $target_dir . basename($file["name"]);
     $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -38,42 +38,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $judul_materi = $_POST['judul_materi'];
     $deskripsi = $_POST['deskripsi'];
     $status = $_POST['status'];
+    $link_materi = $_POST['link_materi']; // Ambil link materi dari form
 
-    // Upload gambar materi
-    $gambar_path = uploadFile($_FILES['gambar'], "../../assets/uploads/gambar/");
+    // Upload gambar materi (jika ada)
+    $gambar_path = null;
+    if (!empty($_FILES['gambar']['name'])) {
+        $gambar_path = uploadFile($_FILES['gambar'], "../../assets/uploads/gambar/");
+    }
 
     // Query untuk insert materi
-    $sql_materi = "INSERT INTO MATERI (judul_materi, deskripsi, id_guru, status, gambar) VALUES (:judul_materi, :deskripsi, :id_guru, :status, :gambar)";
+    $sql_materi = "INSERT INTO materi (judul_materi, deskripsi, id_guru, status, gambar, link_materi) 
+                  VALUES (:judul_materi, :deskripsi, :id_guru, :status, :gambar, :link_materi)";
     $stmt_materi = $pdo->prepare($sql_materi);
     $stmt_materi->execute([
         ':judul_materi' => $judul_materi,
         ':deskripsi' => $deskripsi,
-        ':id_guru' => $id_guru, // Ambil dari session
+        ':id_guru' => $id_guru,
         ':status' => $status,
-        ':gambar' => $gambar_path
+        ':gambar' => $gambar_path,
+        ':link_materi' => $link_materi
     ]);
 
-    // Ambil ID materi yang baru saja diinsert
-    $id_materi = $pdo->lastInsertId();
-
-    // Upload file audiobook
-    $audio_path = uploadFile($_FILES['file_audio'], "../../assets/uploads/audio/");
-
-    // Query untuk insert audiobook
-    $sql_audio = "INSERT INTO AUDIOBOOK (file_audio, id_materi) VALUES (:file_audio, :id_materi)";
-    $stmt_audio = $pdo->prepare($sql_audio);
-    $stmt_audio->execute([
-        ':file_audio' => $audio_path,
-        ':id_materi' => $id_materi
-    ]);
-
-    echo "<script>alert('Materi dan Audiobook berhasil ditambahkan!'); window.location.href='../dashboard/dashboard.php';</script>";
+    echo "<script>alert('Materi berhasil ditambahkan!'); window.location.href='../dashboard/dashboard.php';</script>";
 }
 ?>
 <?php include_once('../components/header.php'); ?>
 <?php include_once('../components/nav.php'); ?>
 <main class="content">
-    <h1 class="content-title">Tambah Materi dan Audiobook</h1>
+    <div class="content-container">
+    <h1 class="content-title">Tambah Materi</h1>
     <form class="content-form" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="judul_materi" class="form-label">Judul Materi:</label>
@@ -86,6 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-group">
+            <label for="link_materi" class="form-label">Link Materi:</label>
+            <input type="url" id="link_materi" name="link_materi" class="form-input" placeholder="https://example.com">
+        </div>
+
+        <div class="form-group">
             <label for="status" class="form-label">Status:</label>
             <select id="status" name="status" class="form-select" required>
                 <option value="draft">Draft</option>
@@ -95,13 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-group">
-            <label for="gambar" class="form-label">Gambar Materi:</label>
+            <label for="gambar" class="form-label">Gambar Materi (Opsional):</label>
             <input type="file" id="gambar" name="gambar" class="form-file" accept="image/*">
-        </div>
-
-        <div class="form-group">
-            <label for="file_audio" class="form-label">File Audiobook:</label>
-            <input type="file" id="file_audio" name="file_audio" class="form-file" accept="audio/*" required>
         </div>
 
         <div class="form-actions">
@@ -109,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="button" class="form-button form-button-cancel" onclick="window.location.href='list.php'">Kembali ke List</button>
         </div>
     </form>
+    </div>
 </main>
 </body>
 </html>

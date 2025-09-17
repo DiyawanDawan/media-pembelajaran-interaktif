@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Jika admin belum login, redirect ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: index.php");
@@ -15,11 +16,8 @@ if (!isset($_GET['id'])) {
 }
 $id_materi = $_GET['id'];
 
-// Ambil data materi dan audiobook dari database
-$sql_materi = "SELECT materi.*, audiobook.file_audio 
-               FROM materi 
-               LEFT JOIN audiobook ON materi.id_materi = audiobook.id_materi 
-               WHERE materi.id_materi = :id_materi";
+// Ambil data materi dari database
+$sql_materi = "SELECT * FROM materi WHERE id_materi = :id_materi";
 $stmt_materi = $pdo->prepare($sql_materi);
 $stmt_materi->execute([':id_materi' => $id_materi]);
 $materi = $stmt_materi->fetch(PDO::FETCH_ASSOC);
@@ -31,8 +29,7 @@ if (!$materi) {
 }
 
 // Fungsi untuk upload file
-function uploadFile($file, $target_dir)
-{
+function uploadFile($file, $target_dir) {
     $target_file = $target_dir . basename($file["name"]);
     $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $file_size = $file["size"];
@@ -56,24 +53,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $judul_materi = $_POST['judul_materi'];
     $deskripsi = $_POST['deskripsi'];
     $status = $_POST['status'];
+    $link_materi = $_POST['link_materi'];
 
     // Update data materi
     $sql_update_materi = "UPDATE materi 
-                          SET judul_materi = :judul_materi, 
-                              deskripsi = :deskripsi, 
-                              status = :status 
-                          WHERE id_materi = :id_materi";
+                         SET judul_materi = :judul_materi, 
+                             deskripsi = :deskripsi, 
+                             status = :status,
+                             link_materi = :link_materi
+                         WHERE id_materi = :id_materi";
     $stmt_update_materi = $pdo->prepare($sql_update_materi);
     $stmt_update_materi->execute([
         ':judul_materi' => $judul_materi,
         ':deskripsi' => $deskripsi,
         ':status' => $status,
+        ':link_materi' => $link_materi,
         ':id_materi' => $id_materi
     ]);
 
     // Jika ada file gambar baru diupload
     if ($_FILES['gambar']['size'] > 0) {
         $gambar_path = uploadFile($_FILES['gambar'], "../../assets/uploads/gambar/");
+        
+        // Hapus gambar lama jika ada
+        if ($materi['gambar'] && file_exists($materi['gambar'])) {
+            unlink($materi['gambar']);
+        }
+        
         $sql_update_gambar = "UPDATE materi SET gambar = :gambar WHERE id_materi = :id_materi";
         $stmt_update_gambar = $pdo->prepare($sql_update_gambar);
         $stmt_update_gambar->execute([
@@ -82,36 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
     }
 
-    // Jika ada file audio baru diupload
-    if ($_FILES['file_audio']['size'] > 0) {
-        $audio_path = uploadFile($_FILES['file_audio'], "../../assets/uploads/audio/");
-        // Cek apakah audiobook sudah ada
-        $sql_check_audio = "SELECT * FROM audiobook WHERE id_materi = :id_materi";
-        $stmt_check_audio = $pdo->prepare($sql_check_audio);
-        $stmt_check_audio->execute([':id_materi' => $id_materi]);
-        $audiobook = $stmt_check_audio->fetch(PDO::FETCH_ASSOC);
-
-        if ($audiobook) {
-            // Update file audio yang sudah ada
-            $sql_update_audio = "UPDATE audiobook SET file_audio = :file_audio WHERE id_materi = :id_materi";
-            $stmt_update_audio = $pdo->prepare($sql_update_audio);
-            $stmt_update_audio->execute([
-                ':file_audio' => $audio_path,
-                ':id_materi' => $id_materi
-            ]);
-        } else {
-            // Tambahkan file audio baru
-            $sql_insert_audio = "INSERT INTO audiobook (file_audio, id_materi) VALUES (:file_audio, :id_materi)";
-            $stmt_insert_audio = $pdo->prepare($sql_insert_audio);
-            $stmt_insert_audio->execute([
-                ':file_audio' => $audio_path,
-                ':id_materi' => $id_materi
-            ]);
-        }
-    }
-
     // Set session pesan sukses
-    $_SESSION['success_message'] = "Materi dan Audiobook berhasil diperbarui!";
+    $_SESSION['success_message'] = "Materi berhasil diperbarui!";
 
     // Redirect ke halaman list.php
     header("Location: list.php");
@@ -122,16 +100,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include_once('../components/nav.php'); ?>
 <main class="content">
     <div class="content-container">
-        <h1 class="content-title">Edit Materi dan Audiobook</h1>
+        <h1 class="content-title">Edit Materi</h1>
         <form class="content-form" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="judul_materi" class="form-label">Judul Materi:</label>
-                <input type="text" id="judul_materi" name="judul_materi" class="form-input" value="<?= htmlspecialchars($materi['judul_materi']) ?>" required>
+                <input type="text" id="judul_materi" name="judul_materi" class="form-input" 
+                       value="<?= htmlspecialchars($materi['judul_materi']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="deskripsi" class="form-label">Deskripsi:</label>
-                <textarea id="deskripsi" name="deskripsi" class="form-textarea" required><?= htmlspecialchars($materi['deskripsi']) ?></textarea>
+                <textarea id="deskripsi" name="deskripsi" class="form-textarea" required><?= 
+                    htmlspecialchars($materi['deskripsi']) ?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="link_materi" class="form-label">Link Materi:</label>
+                <input type="url" id="link_materi" name="link_materi" class="form-input" 
+                       value="<?= htmlspecialchars($materi['link_materi']) ?>" 
+                       placeholder="https://example.com">
             </div>
 
             <div class="form-group">
@@ -144,29 +131,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="form-group">
-                <label for="gambar" class="form-label">Gambar Materi:</label>
+                <label for="gambar" class="form-label">Gambar Materi (Opsional):</label>
                 <input type="file" id="gambar" name="gambar" class="form-file" accept="image/*">
                 <?php if ($materi['gambar']): ?>
-                    <p class="form-info">Gambar saat ini: <a href="../../assets/uploads/gambar/<?= htmlspecialchars(basename($materi['gambar'])) ?>" target="_blank" class="form-link">Lihat Gambar</a></p>
-                <?php endif; ?>
-            </div>
-
-            <div class="form-group">
-                <label for="file_audio" class="form-label">File Audiobook:</label>
-                <input type="file" id="file_audio" name="file_audio" class="form-file" accept="audio/*">
-                <?php if ($materi['file_audio']): ?>
-                    <p class="form-info">File audio saat ini:
-                        <audio controls class="form-audio">
-                            <source src="../../assets/uploads/audio/<?= htmlspecialchars(basename($materi['file_audio'])) ?>" type="audio/mpeg">
-                            Browser Anda tidak mendukung tag audio.
-                        </audio>
+                    <p class="form-info">Gambar saat ini: 
+                        <a href="<?= htmlspecialchars($materi['gambar']) ?>" target="_blank" class="form-link">
+                            Lihat Gambar
+                        </a>
+                        <br>
+                        <img src="<?= htmlspecialchars($materi['gambar']) ?>" alt="Gambar Materi" class="form-preview">
                     </p>
                 <?php endif; ?>
             </div>
 
             <div class="form-actions">
                 <button type="submit" class="form-button form-button-submit">Simpan Perubahan</button>
-                <button type="button" class="form-button form-button-cancel" onclick="window.location.href='list.php'">Kembali ke List</button>
+                <button type="button" class="form-button form-button-cancel" 
+                        onclick="window.location.href='list.php'">Kembali ke List</button>
             </div>
         </form>
     </div>

@@ -17,12 +17,12 @@ if (isset($_GET['id'])) {
         $pdo->beginTransaction();
 
         // Hapus data audiobook terkait (jika ada)
-        $sql_delete_audiobook = "DELETE FROM AUDIOBOOK WHERE id_materi = :id_materi";
+        $sql_delete_audiobook = "DELETE FROM audiobook WHERE id_materi = :id_materi";
         $stmt_delete_audiobook = $pdo->prepare($sql_delete_audiobook);
         $stmt_delete_audiobook->execute([':id_materi' => $id_materi]);
 
         // Hapus data materi
-        $sql_delete_materi = "DELETE FROM MATERI WHERE id_materi = :id_materi";
+        $sql_delete_materi = "DELETE FROM materi WHERE id_materi = :id_materi";
         $stmt_delete_materi = $pdo->prepare($sql_delete_materi);
         $stmt_delete_materi->execute([':id_materi' => $id_materi]);
 

@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 require_once '../../includes/db.php';
 
 // Ambil data materi untuk dropdown
-$sql_materi = "SELECT id_materi, judul_materi FROM MATERI";
+$sql_materi = "SELECT id_materi, judul_materi FROM materi";
 $stmt_materi = $pdo->query($sql_materi);
 $materi = $stmt_materi->fetchAll(PDO::FETCH_ASSOC);
 
@@ -57,14 +57,26 @@ if (isset($_GET['status'])) {
                 <label class="form-label">Pilihan C:</label>
                 <input type="text" name="pilihan_c" class="form-input" required>
             </div>
+            <!-- Input Pilihan C -->
+            <div class="form-group">
+                <label class="form-label">Pilihan C:</label>
+                <input type="text" name="pilihan_c" class="form-input" required>
+            </div>
+            <!-- Input Pilihan C -->
+            <div class="form-group">
+                <label class="form-label">Pilihan D:</label>
+                <input type="text" name="pilihan_d" class="form-input" required>
+            </div>
 
             <!-- Input Jawaban Benar -->
             <div class="form-group">
-                <label class="form-label">Jawaban Benar:</label>
+                <label class="form-label">Jawaban benar:</label>
                 <select name="jawaban_benar" class="form-select" required>
                     <option value="a">Pilihan A</option>
                     <option value="b">Pilihan B</option>
                     <option value="c">Pilihan C</option>
+                    <option value="c">Pilihan C</option>
+                    <option value="d">Pilihan D</option>
                 </select>
             </div>
 
@@ -72,7 +84,7 @@ if (isset($_GET['status'])) {
             <div class="form-group">
                 <label class="form-label">Materi:</label>
                 <select name="id_materi" class="form-select">
-                    <option value="">Pilih Materi</option>
+                    <option value="">Pilih materi</option>
                     <?php foreach ($materi as $m): ?>
                         <option value="<?php echo $m['id_materi']; ?>"><?php echo htmlspecialchars($m['judul_materi']); ?></option>
                     <?php endforeach; ?>

@@ -16,9 +16,9 @@ if (!isset($_GET['id'])) {
 $id_kuis = $_GET['id'];
 
 // Ambil data kuis dari database
-$sql_kuis = "SELECT kuis.*, MATERI.judul_materi 
+$sql_kuis = "SELECT kuis.*, materi.judul_materi 
              FROM kuis 
-             LEFT JOIN MATERI ON kuis.id_materi = MATERI.id_materi 
+             LEFT JOIN materi ON kuis.id_materi = materi.id_materi 
              WHERE kuis.id_kuis = :id_kuis";
 $stmt_kuis = $pdo->prepare($sql_kuis);
 $stmt_kuis->execute([':id_kuis' => $id_kuis]);
@@ -31,7 +31,7 @@ if (!$kuis) {
 }
 
 // Ambil data materi untuk dropdown
-$sql_materi = "SELECT id_materi, judul_materi FROM MATERI";
+$sql_materi = "SELECT id_materi, judul_materi FROM materi";
 $stmt_materi = $pdo->query($sql_materi);
 $materi = $stmt_materi->fetchAll(PDO::FETCH_ASSOC);
 
@@ -82,6 +82,12 @@ if (isset($_GET['status'])) {
                 <label class="form-label">Pilihan C:</label>
                 <input type="text" name="pilihan_c" class="form-input" value="<?php echo htmlspecialchars($kuis['pilihan_c']); ?>" required>
             </div>
+            
+            <!-- Input Pilihan D -->
+            <div class="form-group">
+                <label class="form-label">Pilihan D:</label>
+                <input type="text" name="pilihan_d" class="form-input" value="<?php echo htmlspecialchars($kuis['pilihan_d']); ?>" required>
+            </div>
 
             <!-- Input Jawaban Benar -->
             <div class="form-group">
@@ -90,6 +96,7 @@ if (isset($_GET['status'])) {
                     <option value="a" <?php echo $kuis['jawaban_benar'] === 'a' ? 'selected' : ''; ?>>Pilihan A</option>
                     <option value="b" <?php echo $kuis['jawaban_benar'] === 'b' ? 'selected' : ''; ?>>Pilihan B</option>
                     <option value="c" <?php echo $kuis['jawaban_benar'] === 'c' ? 'selected' : ''; ?>>Pilihan C</option>
+                    <option value="c" <?php echo $kuis['jawaban_benar'] === 'd' ? 'selected' : ''; ?>>Pilihan D</option>
                 </select>
             </div>
 

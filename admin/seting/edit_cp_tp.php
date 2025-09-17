@@ -18,9 +18,9 @@ if (!isset($_GET['id'])) {
 $id_pembelajaran = $_GET['id'];
 
 // Ambil data CP/TP dari database
-$sql_pembelajaran = "SELECT pembelajaran.*, MATERI.judul_materi 
+$sql_pembelajaran = "SELECT pembelajaran.*, materi.judul_materi 
                      FROM pembelajaran 
-                     LEFT JOIN MATERI ON pembelajaran.id_materi = MATERI.id_materi 
+                     LEFT JOIN materi ON pembelajaran.id_materi = materi.id_materi 
                      WHERE pembelajaran.id_pembelajaran = :id_pembelajaran";
 $stmt_pembelajaran = $pdo->prepare($sql_pembelajaran);
 $stmt_pembelajaran->execute([':id_pembelajaran' => $id_pembelajaran]);
@@ -33,7 +33,7 @@ if (!$pembelajaran) {
 }
 
 // Ambil data materi untuk dropdown
-$sql_materi = "SELECT id_materi, judul_materi FROM MATERI";
+$sql_materi = "SELECT id_materi, judul_materi FROM materi";
 $stmt_materi = $pdo->query($sql_materi);
 $materi = $stmt_materi->fetchAll(PDO::FETCH_ASSOC);
 

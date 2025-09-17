@@ -95,8 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php include_once('../components/header.php'); ?>
 <?php include_once('../components/nav.php'); ?>
-<?php include_once('../components/header.php'); ?>
-<?php include_once('../components/nav.php'); ?>
 <main class="content">
     <div class="content-container">
         <h1 class="content-title">Edit Data Organ Pernapasan</h1>

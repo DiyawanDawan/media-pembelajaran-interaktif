@@ -11,9 +11,9 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 require '../../includes/db.php';
 
 // Ambil data CP/TP dari database
-$sql_pembelajaran = "SELECT pembelajaran.*, MATERI.judul_materi 
+$sql_pembelajaran = "SELECT pembelajaran.*, materi.judul_materi 
                      FROM pembelajaran 
-                     LEFT JOIN MATERI ON pembelajaran.id_materi = MATERI.id_materi";
+                     LEFT JOIN materi ON pembelajaran.id_materi = materi.id_materi";
 $stmt_pembelajaran = $pdo->query($sql_pembelajaran);
 $pembelajaran = $stmt_pembelajaran->fetchAll(PDO::FETCH_ASSOC);
 
@@ -46,7 +46,7 @@ if (isset($_GET['status'])) {
         <table class="data-table">
             <thead>
                 <tr class="table-header-row">
-                    <th class="table-header">ID</th>
+                    <th class="table-header">Nomor</th> <!-- Perubahan dari "No" ke "Nomor" -->
                     <th class="table-header">Materi</th>
                     <th class="table-header">Tujuan Pembelajaran (TP)</th>
                     <th class="table-header">Capaian Pembelajaran (CP)</th>
@@ -54,9 +54,11 @@ if (isset($_GET['status'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($pembelajaran as $p): ?>
+                <?php 
+                $nomor = 1; // Mulai nomor urut dari 1
+                foreach ($pembelajaran as $p): ?>
                     <tr class="table-row">
-                        <td class="table-data"><?php echo htmlspecialchars($p['id_pembelajaran']); ?></td>
+                        <td class="table-data"><?php echo $nomor++; ?></td> <!-- Menampilkan nomor urut -->
                         <td class="table-data"><?php echo htmlspecialchars($p['judul_materi'] ?? 'Tidak Terkait'); ?></td>
                         <td class="table-data"><?php echo htmlspecialchars($p['poin_tujuan']); ?></td>
                         <td class="table-data"><?php echo htmlspecialchars($p['poin_capaian']); ?></td>
